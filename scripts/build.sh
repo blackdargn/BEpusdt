@@ -22,8 +22,8 @@ echo "==> 构建 Linux 二进制（嵌入 static）..."
 MODULE_PATH="$(go list -m)"
 CGO_ENABLED=0 GOOS=linux GOARCH="${GOARCH:-amd64}" go build -trimpath \
   -ldflags="-X '${MODULE_PATH}/app.Version=${VERSION}' -s -w -buildid=" \
-  -o bepusdt ./main
+  -o ./dist/pay_server.bin ./main
 
 echo ""
-echo "构建完成: ${ROOT}/bepusdt"
+echo "构建完成: ${ROOT}/dist/pay_server.bin"
 echo "打包镜像: docker build --target runtime-prebuilt -t bepusdt:local ."

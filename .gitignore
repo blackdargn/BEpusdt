@@ -4,6 +4,7 @@ tmp
 .env
 .idea
 *.exe
+*.bin
 conf.toml
 config.yaml
 config.enc
