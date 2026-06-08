@@ -1,0 +1,39 @@
+[Unit]
+Description=Payment Server
+After=network.target
+
+[Service]
+# 运行用户（不要用 root）
+User=dockeruser
+Group=dockeruser
+
+# 工作目录
+WorkingDirectory=/home/dockeruser/pay_server
+
+# 启动命令（带配置文件）
+ExecStart=/home/dockeruser/pay_server/pay_server.bin
+
+# 自动重启（核心）
+Restart=always
+RestartSec=2
+
+# 防止频繁崩溃死循环
+StartLimitBurst=5
+StartLimitIntervalSec=60
+
+# 资源限制（高并发必须）
+LimitNOFILE=100000
+
+# 内存限制（按你机器调）
+MemoryMax=20G
+
+# 日志（走 journal）
+StandardOutput=journal
+StandardError=journal
+
+# 优雅退出
+KillSignal=SIGTERM
+TimeoutStopSec=10
+
+[Install]
+WantedBy=multi-user.target
