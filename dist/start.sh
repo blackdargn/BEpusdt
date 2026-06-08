@@ -25,7 +25,7 @@ fi
 chmod +x "$APP_BIN"
 
 cd "$APP_DIR"
-nohup "$APP_BIN" >> /dev/null 2>&1 &
+nohup "$APP_BIN" start >> /dev/null 2>&1 &
 
 PID=$!
 echo $PID > "$PID_FILE"
