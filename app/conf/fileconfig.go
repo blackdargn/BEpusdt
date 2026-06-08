@@ -46,12 +46,7 @@ func configCandidates(path string) []string {
 		return []string{path}
 	}
 
-	return []string{
-		"/etc/bepusdt/config.enc",
-		"/etc/bepusdt/config.yaml",
-		"config.enc",
-		"config.yaml",
-	}
+	return DefaultConfigCandidates()
 }
 
 func loadConfigFile(path string) (*FileConfig, error) {

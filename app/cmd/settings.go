@@ -21,11 +21,23 @@ func resolveSettings(c *cli.Command) RuntimeSettings {
 
 	return RuntimeSettings{
 		Listen:   resolveString(c, "listen", "LISTEN", cfgValue(cfg, func(c *conf.FileConfig) string { return c.Listen }), ":8080"),
-		Log:      resolveString(c, "log", "LOG", cfgValue(cfg, func(c *conf.FileConfig) string { return c.Log }), "/var/log/bepusdt/"),
+		Log:      resolveLog(c, cfg),
 		SQLite:   resolveString(c, "sqlite", "SQLITE", cfgValue(cfg, func(c *conf.FileConfig) string { return c.SQLite }), "/var/lib/bepusdt/sqlite.db"),
 		MySQL:    resolveString(c, "mysql", "MYSQL_DSN", cfgValue(cfg, func(c *conf.FileConfig) string { return c.MySQLDSN }), ""),
 		Postgres: resolveString(c, "postgres", "POSTGRESQL_DSN", cfgValue(cfg, func(c *conf.FileConfig) string { return c.PostgreSQLDSN }), ""),
 	}
+}
+
+func resolveLog(c *cli.Command, cfg *conf.FileConfig) string {
+	if cliFlagPassed(c, "log") {
+		return c.String("log")
+	}
+
+	if value := strings.TrimSpace(cfgValue(cfg, func(c *conf.FileConfig) string { return c.Log })); value != "" {
+		return value
+	}
+
+	return conf.DefaultLogDir()
 }
 
 func resolveString(c *cli.Command, flagName, envName, configVal, defaultVal string) string {

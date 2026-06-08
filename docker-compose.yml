@@ -13,6 +13,12 @@ services:
       - "8080:8080"
     environment:
       TZ: Asia/Shanghai
+    command:
+      - start
+      - --config
+      - /etc/bepusdt/config.enc
+      - --log
+      - /var/log/bepusdt
     volumes:
       - ./deploy/data/bepusdt:/var/lib/bepusdt
       - ./deploy/data/logs:/var/log/bepusdt

@@ -16,12 +16,7 @@ func init() {
 	// 不推荐引导小白参与修改各种配置文件
 	_ = godotenv.Load()
 
-	configPath := os.Getenv("CONFIG")
-	if path := argValue("--config"); path != "" {
-		configPath = path
-	}
-
-	if err := conf.LoadFileConfig(configPath); err != nil {
+	if err := conf.LoadFileConfig(argValue("--config")); err != nil {
 		fmt.Fprintf(os.Stderr, "加载配置文件失败: %v\n", err)
 		os.Exit(1)
 	}

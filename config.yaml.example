@@ -1,18 +1,17 @@
 # BEpusdt 配置文件示例
-# 复制为 config.yaml 后按需修改，再用 config-cipher 加密为 config.enc 部署
+# 复制为 config.yaml 放在 bepusdt 可执行文件同目录，再用 config-cipher 加密为 config.enc
 
 # 监听地址
 listen: ":8080"
 
-# 日志目录
-log: "/var/log/bepusdt/"
+# 日志目录（留空则默认使用可执行文件同目录下的 logs/）
+# log: "./logs"
 
 # SQLite 数据库文件（使用 MySQL/PostgreSQL 时可忽略）
 sqlite: "/var/lib/bepusdt/sqlite.db"
 
 # MySQL 连接（填写外部已部署的 MySQL 地址）
-# Docker 内访问宿主机 MySQL 可用 host.docker.internal（Linux 需 docker-compose 中 extra_hosts）
-mysql_dsn: "user:password@tcp(host.docker.internal:3306)/bepusdt?charset=utf8mb4&parseTime=True&loc=Local&timeout=3s&readTimeout=10s&writeTimeout=10s"
+mysql_dsn: "user:password@tcp(127.0.0.1:3306)/bepusdt?charset=utf8mb4&parseTime=True&loc=Local&timeout=3s&readTimeout=10s&writeTimeout=10s"
 
 # PostgreSQL 连接（留空则不用）
 postgresql_dsn: ""

@@ -3,9 +3,8 @@ package cmd
 import "github.com/urfave/cli/v3"
 
 var ConfigFlag = &cli.StringFlag{
-	Name:    "config",
-	Usage:   "配置文件路径（支持 config.yaml 或 config.enc）",
-	Sources: cli.EnvVars("CONFIG"),
+	Name:  "config",
+	Usage: "配置文件路径（支持 config.yaml 或 config.enc；默认读取可执行文件同目录）",
 }
 
 var SQLiteFlag = &cli.StringFlag{
@@ -30,10 +29,8 @@ var PostgresDSNFlag = &cli.StringFlag{
 }
 
 var LogFlag = &cli.StringFlag{
-	Name:    "log",
-	Value:   "/var/log/bepusdt/",
-	Usage:   "日志文件保存路径",
-	Sources: cli.EnvVars("LOG"),
+	Name:  "log",
+	Usage: "日志文件保存路径（默认在可执行文件同目录下的 logs/）",
 }
 
 var ListenFlag = &cli.StringFlag{
