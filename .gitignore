@@ -12,7 +12,6 @@ deploy/config/*
 deploy/data/**/*
 !deploy/data/**/.gitkeep
 # Added by goreleaser init:
-dist/
 static/web
 static/secure
 *.log
