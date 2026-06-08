@@ -1,0 +1,17 @@
+.git
+.github
+deploy/data
+docs
+*.md
+.env
+config.yaml
+config.enc
+bepusdt.exe
+config-cipher
+config-cipher.exe
+tmp
+dist
+
+# 默认 runtime 目标需要 web 源码；runtime-prebuilt 目标需要 bepusdt 二进制
+# 若本地存在 bepusdt 二进制，避免被 ADD/COPY 干扰完整构建上下文
+# （完整构建会在 builder 阶段重新编译）

@@ -1,0 +1,21 @@
+services:
+  bepusdt:
+    build:
+      context: .
+      dockerfile: dockerfile
+      target: runtime-prebuilt
+      args:
+        VERSION: ${APP_VERSION:-local}
+    image: bepusdt:local
+    container_name: bepusdt
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - ./deploy/data/bepusdt:/var/lib/bepusdt
+      - ./deploy/data/logs:/var/log/bepusdt
+      - ./deploy/config:/etc/bepusdt:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

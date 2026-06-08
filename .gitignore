@@ -3,7 +3,14 @@ tmp
 .DS_Store
 .env
 .idea
+*.exe
 conf.toml
+config.yaml
+config.enc
+deploy/config/*
+!deploy/config/.gitkeep
+deploy/data/**/*
+!deploy/data/**/.gitkeep
 # Added by goreleaser init:
 dist/
 static/web

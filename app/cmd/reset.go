@@ -15,12 +15,10 @@ import (
 var Reset = &cli.Command{
 	Name:  "reset",
 	Usage: "忘记密码时，此命令可重置账号密码登录入口",
-	Flags: []cli.Flag{SQLiteFlag, MySQLDSNFlag, PostgresDSNFlag},
+	Flags: []cli.Flag{ConfigFlag, SQLiteFlag, MySQLDSNFlag, PostgresDSNFlag},
 	Before: func(ctx context.Context, c *cli.Command) (context.Context, error) {
-		mysql := c.String("mysql")
-		postgres := c.String("postgres")
-		sqlite := c.String("sqlite")
-		if err := model.Init(sqlite, mysql, postgres); err != nil {
+		settings := resolveSettings(c)
+		if err := model.Init(settings.SQLite, settings.MySQL, settings.Postgres); err != nil {
 			return ctx, fmt.Errorf("数据库初始化失败 %w", err)
 		}
 

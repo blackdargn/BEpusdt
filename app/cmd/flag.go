@@ -2,6 +2,12 @@ package cmd
 
 import "github.com/urfave/cli/v3"
 
+var ConfigFlag = &cli.StringFlag{
+	Name:    "config",
+	Usage:   "配置文件路径（支持 config.yaml 或 config.enc）",
+	Sources: cli.EnvVars("CONFIG"),
+}
+
 var SQLiteFlag = &cli.StringFlag{
 	Name:    "sqlite",
 	Value:   "/var/lib/bepusdt/sqlite.db",

@@ -27,16 +27,14 @@ import (
 var Start = &cli.Command{
 	Name:  "start",
 	Usage: "启动收款网关",
-	Flags: []cli.Flag{SQLiteFlag, MySQLDSNFlag, PostgresDSNFlag, LogFlag, ListenFlag},
+	Flags: []cli.Flag{ConfigFlag, SQLiteFlag, MySQLDSNFlag, PostgresDSNFlag, LogFlag, ListenFlag},
 	Before: func(ctx context.Context, c *cli.Command) (context.Context, error) {
-		mysql := c.String("mysql")
-		postgres := c.String("postgres")
-		sqlite := c.String("sqlite")
-		if err := model.Init(sqlite, mysql, postgres); err != nil {
+		settings := resolveSettings(c)
+		if err := model.Init(settings.SQLite, settings.MySQL, settings.Postgres); err != nil {
 			return ctx, fmt.Errorf("数据库初始化失败 %w", err)
 		}
 
-		if err := log.Init(c.String("log")); err != nil {
+		if err := log.Init(settings.Log); err != nil {
 			return ctx, fmt.Errorf("日志初始化失败 %w", err)
 		}
 
@@ -52,11 +50,13 @@ var Start = &cli.Command{
 }
 
 func start(ctx context.Context, cmd *cli.Command) error {
+	settings := resolveSettings(cmd)
+
 	// 开始任务调度
 	task.Start(ctx)
 
 	// 启动 Web 服务器
-	var listen = cmd.String("listen")
+	var listen = settings.Listen
 	var srv = &http.Server{Addr: listen, Handler: router.Handler()}
 
 	log.Info("web server Start listen", listen)
