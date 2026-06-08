@@ -11,7 +11,7 @@ Group=dockeruser
 WorkingDirectory=/home/dockeruser/pay_server
 
 # 启动命令（带配置文件）
-ExecStart=/home/dockeruser/pay_server/pay_server.bin
+ExecStart=/home/dockeruser/pay_server/pay_server.bin start
 
 # 自动重启（核心）
 Restart=always
