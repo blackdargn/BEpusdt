@@ -33,8 +33,8 @@
                     <a-option v-for="(_, key) in userInfoStore.trade_crypto" :key="key" :value="key">{{ key }}</a-option>
                   </a-select>
                 </a-form-item>
-                <a-form-item field="timeout" label="订单有效期（小时）">
-                  <a-slider v-model="form.timeout" :max="3" />
+                <a-form-item field="timeout" label="订单有效期（分钟）">
+                  <a-slider v-model="form.timeout" :min="15" :max="180" />
                 </a-form-item>
               </div>
 
@@ -133,7 +133,7 @@ const rules = {
     { type: 'number', min: 1, max: 99999999, message: '订单金额必须在 1 到 99999999 之间' }
   ],
   trade_fiat: [{ required: true, message: '法币币种不能为空' }],
-  timeout: [{ type: 'number', min: 1, message: '最小为1小时' }]
+  timeout: [{ type: 'number', min: 3, message: '最小为 3 分钟' }]
 };
 
 const form = reactive({
@@ -142,7 +142,7 @@ const form = reactive({
   amount: 0,
   trade_fiat: undefined,
   trade_crypto: [],
-  timeout: 1
+  timeout: 20
 });
 
 const generateOrderId = () => {
@@ -178,7 +178,7 @@ const handleSubmit = async ({ errors, values }: ArcoDesign.ArcoSubmit) => {
       ...values,
       fiat: form.trade_fiat,
       currencies: Array.isArray(form.trade_crypto) ? form.trade_crypto.join(",") : "",
-      timeout: form.timeout * 3600
+      timeout: form.timeout * 60
     };
 
     const res = await createOrderApi(payload);

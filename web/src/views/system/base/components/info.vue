@@ -51,7 +51,7 @@
             label="订单默认超时"
             extra="订单默认超时，单位为秒；超过此时间未支付的订单将被自动关闭"
           >
-            <a-input v-model="form.payment_timeout" placeholder="推荐 1200" />
+            <a-input v-model="form.payment_timeout" placeholder="推荐 1200（20 分钟）" />
           </a-form-item>
 
           <a-form-item field="payment_match_mode" label="金额匹配模式">
